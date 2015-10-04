@@ -1,0 +1,5 @@
+name: HideAllPlayers
+author: TonyDroidd
+version: 1.0
+api: [1.12.0]
+main: TDroidd\HAP\Main

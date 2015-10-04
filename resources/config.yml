@@ -1,0 +1,7 @@
+# Config file for HAP by @TDroidd
+
+HidePlayers-Item: 332
+ShowPlayers-Item: 341
+
+HidePlayer-Message: Los Jugadores Fueron Ocultados
+ShowPlayer-Message: Jugadores Mostrados
