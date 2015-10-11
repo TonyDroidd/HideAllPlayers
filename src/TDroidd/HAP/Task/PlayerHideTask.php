@@ -11,11 +11,12 @@ class PlayerHideTask extends PluginTask
     public function __construct(Main $plugin, Player $player)
     {
         parent::__construct($plugin);
+        $this->plugin = $plugin;
         $this->player = $player;
     }
 
     public function onRun($currentTick){
-        foreach(Server::getInstance()->getOnlinePlayers() as $online){
+        foreach($this->plugin->getServer()->getOnlinePlayers() as $online){
             $this->player->hidePlayer($online);
         }
     }
