@@ -16,7 +16,7 @@ class Main extends PluginBase implements Listener{
     public function onEnable(){
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getLogger()->info(TextFormat::GREEN . "HAP Enabled");
+        $this->getLogger()->info(TextFormat::GREEN . "HideAllPlayers Enabled");
     }
 
     public function onJoin(PlayerJoinEvent $e){
@@ -38,17 +38,20 @@ class Main extends PluginBase implements Listener{
         $player = $event->getPlayer();
         $hidetask = new PlayerHideTask($this, $player);
         $item = $event->getItem()->getId();
-        if($item == $cfg->get("HidePlayers-Item")){
-            $this->task = $this->getServer()->getScheduler()->scheduleRepeatingTask($hidetask, 20);
-            $player->sendPopup(TextFormat::YELLOW . $cfg->get("HidePlayer-Message"));
-            $event->setCancelled(true);
-        }elseif($item == $cfg->get("ShowPlayers-Item")){
-            $this->getServer()->getScheduler()->cancelTask($this->task->getTaskId());
-            foreach ($this->getServer()->getOnlinePlayers() as $onl){
-                $player->showPlayer($onl);
-                $player->sendPopup(TextFormat::GREEN . $cfg->get("ShowPlayer-Message"));
-                $event->setCancelled(true);
-            }
+            switch($item){
+                case $cfg->get("HidePlayers-Item"):
+                    $this->task = $this->getServer()->getScheduler()->scheduleRepeatingTask($hidetask, 20);
+                    $player->sendPopup(TextFormat::YELLOW . $cfg->get("HidePlayer-Message"));
+                    $event->setCancelled(true);
+                    break;
+                case $cfg->get("ShowPlayers-Item"):
+                    $this->getServer()->getScheduler()->cancelTask($this->task->getTaskId());
+                    foreach ($this->getServer()->getOnlinePlayers() as $onl){
+                        $player->showPlayer($onl);
+                        $player->sendPopup(TextFormat::GREEN . $cfg->get("ShowPlayer-Message"));
+                        $event->setCancelled(true);
+                        }
+                    break;
         }
     }
 }
